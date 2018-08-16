@@ -50,6 +50,7 @@ admin_pw=$6
 #if the device is in Deep Sleep mode, wake it up
 if (( $( curl -s $ip | grep -c "DeepSleep") == 1))
 then
+  echo "Device asleep. Waking up..."
   curl -i -s -k -o /dev/null -X $'POST' \
     -H $'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0' -H $"Referer: http://$ip/DeepSleep.htm" -H $'Upgrade-Insecure-Requests: 1' -H $'Content-Type: application/x-www-form-urlencoded' \
     --data-binary $'submit001=Start&okhtmfile=DeepSleepApply.htm&func=wakeup' \

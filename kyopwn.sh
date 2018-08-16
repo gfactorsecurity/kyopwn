@@ -2,9 +2,7 @@
 
 IFS='\n'
 
-ip=$1
-if [[ "$ip" == "-h" ]]
-then
+function usage (){
   echo "KyoPwn"
   echo "by G-Factor Security (@GFSec)"
   echo ""
@@ -24,23 +22,27 @@ then
   echo ""
   echo "Exampe: $0 192.168.0.2 192.168.0.100 445 ScanUser Admin Admin"
   exit
+}
+
+ip=$1
+
+#if help switch given
+if [[ "$ip" == "-h" ]]
+then
+  usage
 fi
+
+#if not 6 arguments given
+if [ "$#" -ne 6 ]
+then
+  usage
+fi
+
 smb_target=$2
 smb_port=$3
 smb_user=$4
-if [[ "$5" == "" ]]
-then
-  admin_user="Admin"
-else
-  admin_user=$5
-fi
-
-if [[ "$6" == "" ]]
-then
-  admin_pw="Admin"
-else
-  admin_pw=$6
-fi
+admin_user=$5
+admin_pw=$6
 
 #Line below is for proxying requests through local HTTP proxy for debugging (ie with Burp)
 #export http_proxy=http://127.0.0.1:8080/
